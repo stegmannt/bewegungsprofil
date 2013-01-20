@@ -7,12 +7,18 @@ coordinates = []
 olddir = Dir.pwd
 images = []
 
+module EXIFR
+  class JPEG
+    attr_accessor :filename
+  end
+end
+
 Dir.chdir(ARGV[0])
 Dir.glob("*.{jpg,jpeg,JPG,JPEG}") { |file|
 				   image = EXIFR::JPEG.new(file)
+                                  image.filename = file
                                   if image.exif? then
 				      images << image
-				      puts "#{file}: Erstellt: #{image.date_time}, Long. #{image.gps.longitude} Lat. #{image.gps.latitude}"
                                   else
 				      puts "#{file}: no exif information found"
                                   end
@@ -29,7 +35,8 @@ poly = MapPolygon.new(:color => "red")
 
 i='A'
 images.each { |image|
-                   location = MapLocation.new(:longitude => image.gps.longitude, :latitude => image.gps.latitude)
+		  puts "#{i} #{image.filename}: Erstellt: #{image.date_time}, Long. #{image.gps.longitude} Lat. #{image.gps.latitude}"
+                 location = MapLocation.new(:longitude => image.gps.longitude, :latitude => image.gps.latitude)
                  poly.points << location
                  map.markers << MapMarker.new(:location => location, :label => i)
                  i=i.succ
