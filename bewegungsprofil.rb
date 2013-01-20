@@ -8,7 +8,7 @@ olddir = Dir.pwd
 images = []
 
 Dir.chdir(ARGV[0])
-files = Dir.glob("*.{jpg,jpeg,JPG,JPEG}") { |file|
+Dir.glob("*.{jpg,jpeg,JPG,JPEG}") { |file|
 				   image = EXIFR::JPEG.new(file)
                                   if image.exif? then
 				      images << image
@@ -24,7 +24,7 @@ Dir.chdir(olddir)
 images.sort! {|x,y| x.date_time <=> y.date_time}
 
 #create the static map
-map = GoogleStaticMap.new(:maptype => "sattelite", :format => "jpg", :width => 1024, :height => 768)
+map = GoogleStaticMap.new(:maptype => "sattelite", :format => "jpg", :width => 1024, :height => 768, :scale => 2)
 poly = MapPolygon.new(:color => "red")
 
 i='A'
