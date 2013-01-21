@@ -35,7 +35,7 @@ poly = MapPolygon.new(:color => "red")
 
 i='A'
 images.each { |image|
-		  puts "#{i} #{image.filename}: Erstellt: #{image.date_time}, Long. #{image.gps.longitude} Lat. #{image.gps.latitude}"
+		  puts "#{i} #{image.filename}: created: #{image.date_time}, long. #{image.gps.longitude} lat. #{image.gps.latitude}"
                  location = MapLocation.new(:longitude => image.gps.longitude, :latitude => image.gps.latitude)
                  poly.points << location
                  map.markers << MapMarker.new(:location => location, :label => i)
